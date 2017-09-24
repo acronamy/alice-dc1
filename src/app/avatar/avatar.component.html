@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+  
+  
+
+  <symbol id="avatar" [attr.width]="appearance.avatar.size" [attr.height]="appearance.avatar.size" viewBox="0 0 100 100">
+    <circle [attr.fill]="appearance.avatar.outerDiskColor" cx="50" cy="50" r="50" />
+    <circle class="rim-lighting" clip-path="url(#boundry-mask)" fill="url(#main-rim-light)" cx="50" cy="50" r="50" />
+    <circle id="face-screen" [attr.fill]="appearance.avatar.innerDiskColor" cx="50" cy="50" r="45" />
+    <g id="eyes">
+      
+      <use href="#eye-template-left" x="25" y="30" [attr.width]="appearance.avatar.eyeSize" [attr.height]="appearance.avatar.eyeSize" />
+      <use href="#eye-template-right" x="55" y="30" [attr.width]="appearance.avatar.eyeSize" [attr.height]="appearance.avatar.eyeSize" />
+    </g>
+  </symbol>
+
+  
+  
+  <symbol clip-path="url(#eye-clipping-left)"  id="eye-template-left" viewBox="0 0 100 100">
+    <rect id="eye-color-left" [attr.fill]="appearance.avatar.eyeColor" width="100" height="100"/>
+    <rect id="eye-lighting-left" fill="url(#eye-rim-light-left)" [ngStyle]="{opacity:appearance.avatar.eyeLightStrength}" x="-5" y="-5" width="110" height="110"/>
+  </symbol>
+
+  <symbol clip-path="url(#eye-clipping-right)" id="eye-template-right" viewBox="0 0 100 100">
+      <rect id="eye-color-right" [attr.fill]="appearance.avatar.eyeColor" width="100" height="100"/>
+      <rect id="eye-lighting-right" [ngStyle]="{opacity:appearance.avatar.eyeLightStrength}" fill="url(#eye-rim-light-right)" x="0" y="0" width="100" height="100"/>
+  </symbol>
+
+</svg>

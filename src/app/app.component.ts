@@ -1,10 +1,16 @@
 import { Component } from '@angular/core';
+import { AppearanceService } from "./appearance.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  providers:[
+    AppearanceService
+  ]
 })
 export class AppComponent {
-  title = 'app works!';
+  constructor(
+    private appearance:AppearanceService
+  ){}
 }
