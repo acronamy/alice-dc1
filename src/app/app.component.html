@@ -38,17 +38,26 @@
       <stop offset="0.9167" style="stop-color:#0E467B;stop-opacity:0.0929" />
       <stop offset="1" style="stop-color:#003B73;stop-opacity:0" />
     </radialGradient>
+
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="10 10" result="glow"/>
+      <feMerge>
+        <feMergeNode in="glow"/>
+        <feMergeNode in="glow"/>
+        <feMergeNode in="glow"/>
+      </feMerge>
+    </filter>
   </defs>
 
   <!--masks-->
   <defs id="masks">
       <clipPath id="eye-clipping-left">
-          <path id="eye-left-emote-mask" d="M95,25c0-11-9-20-20-20H25C14,5,5,14,5,25v50c0,11,9,20,20,20h50c11,0,20-9,20-20V25z"/>
+          <path class='emote-mask' id="eye-left-emote-mask" d="M95,25c0-11-9-20-20-20H25C14,5,5,14,5,25v50c0,11,9,20,20,20h50c11,0,20-9,20-20V25z"/>
       </clipPath>
       <clipPath id="eye-clipping-right">
-          <path id="eye-right-emote-mask" d="M95,25c0-11-9-20-20-20H25C14,5,5,14,5,25v50c0,11,9,20,20,20h50c11,0,20-9,20-20V25z"/>
+          <path class='emote-mask' id="eye-right-emote-mask" d="M95,25c0-11-9-20-20-20H25C14,5,5,14,5,25v50c0,11,9,20,20,20h50c11,0,20-9,20-20V25z"/>
       </clipPath>
   </defs>
 
-  <use href="#avatar" x="0" y="0" [attr.width]="appearance.avatar.size" [attr.height]="appearance.avatar.size"/>
+  <use href="#avatar" [attr.y]="appearance.position.top" [attr.x]="appearance.position.left" [attr.width]="appearance.avatar.size" [attr.height]="appearance.avatar.size"/>
 </svg>

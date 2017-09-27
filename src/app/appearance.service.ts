@@ -6,9 +6,8 @@ export class AppearanceService {
   constructor() { }
 
   avatar = {
-    eyeColor:"#007abc",
+    eyeColor:"#2a8fe6",
     eyeSize:20,
-    eyeLightStrength:.5,
     outerDiskColor:"#A5AFB9",
     innerDiskColor:"rgba(24, 28, 33, .9)",
     size:300,
@@ -18,5 +17,12 @@ export class AppearanceService {
     width:innerWidth,
     height:innerHeight
   }
+
+  position = {
+    top: (innerHeight / 2) - (this.avatar.size / 2),
+    left: (innerWidth / 2) - (this.avatar.size / 2)
+  }
+
+  
 
 }
