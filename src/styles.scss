@@ -15,3 +15,22 @@ body{
 app-avatar{
     display: none;
 }
+
+app-stage{
+    position: absolute;
+    left:0;
+    top:0;
+    bottom:0;
+    right:0;
+}
+
+#generated{
+    position: absolute;
+    top:0;
+    left: 0;
+    path{
+        fill:transparent;
+        stroke: limegreen;
+        stroke-width: 3;
+    }
+}

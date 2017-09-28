@@ -81,7 +81,6 @@ export class EmotionService {
     return new Promise(resolve=>{
       const targetEyes = this.getEyes(options.eyeSelector);
       for(let eye of targetEyes){
-        console.log(eye)
         KUTE.to(document.querySelector(eye), Object.assign({
           path: this.eyeShapes[options.shape],
         }, options.transforms),
@@ -113,7 +112,6 @@ export class EmotionService {
         //Tween options object
         {
           complete:()=>{
-            console.log('DONE?')
             resolve();
           }
         }

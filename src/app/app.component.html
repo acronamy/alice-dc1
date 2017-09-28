@@ -1,5 +1,6 @@
 <!--Import-->
 <app-avatar></app-avatar>
+<app-stage></app-stage>
 
 <svg [attr.width]="appearance.screen.width" [attr.height]="appearance.screen.height" [attr.viewBox]="'0 0 '+appearance.screen.width+' '+appearance.screen.height">
   <!--Lighting-->
@@ -59,5 +60,7 @@
       </clipPath>
   </defs>
 
-  <use href="#avatar" [attr.y]="appearance.position.top" [attr.x]="appearance.position.left" [attr.width]="appearance.avatar.size" [attr.height]="appearance.avatar.size"/>
+  <g id='move-wrapper'>
+    <use href="#avatar" [attr.width]="appearance.avatar.size" [attr.height]="appearance.avatar.size"/>
+  </g>
 </svg>

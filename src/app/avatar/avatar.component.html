@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg">
   
   <symbol id="avatar" [attr.width]="appearance.avatar.size" [attr.height]="appearance.avatar.size" viewBox="0 0 100 100">
-    <circle [attr.fill]="appearance.avatar.outerDiskColor" cx="50" cy="50" r="50" />
+    <circle id='avatar-size' [attr.fill]="appearance.avatar.outerDiskColor" cx="50" cy="50" r="50" />
     <circle class="rim-lighting" clip-path="url(#boundry-mask)" fill="url(#main-rim-light)" cx="50" cy="50" r="50" />
     <circle id="face-screen" [attr.fill]="appearance.avatar.innerDiskColor" cx="50" cy="50" r="45" />
     <g id="eyes">
