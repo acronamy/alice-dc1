@@ -3,6 +3,50 @@ import * as anime from "animejs";
 import {randomIntClamp} from "./random.utils";
 import { AppearanceService } from './appearance.service';
 
+
+interface DistanceRecomend{
+	name:string,
+	use
+}
+
+function rateDistance(n):DistanceRecomend{
+	let rating;
+	n = Math.round(n);
+
+	if(n >= 0){
+		rating = {
+			use: 1000,
+			name:'v-short'
+		};
+	}
+	if(n > 200){
+		rating = {
+			use: 1000,
+			name:'short'
+		};
+	}
+	if(n > 400){
+		rating = {
+			use: 1200,
+			name:'medium'
+		};
+	}
+	if(n > 500){
+		rating = {
+			use: 1500,
+			name:'long'
+		};
+	}
+	if(n > 600){
+		rating = {
+			use:1800,
+			name:'v-long'
+		};
+	}
+
+	return rating;
+}
+
 var cache = [];
 class Bezier{
   cache = cache;
@@ -44,7 +88,7 @@ class Bezier{
 		}
 		
 	}
-	perfectCurve(draw):number{
+	perfectCurve(draw){
     this.uid++;
     let oldPath = this.target.querySelector("path");
 		if(oldPath){
@@ -55,11 +99,16 @@ class Bezier{
 		
 		let dir:"up"|"down" = threshold? "up":"down";
     let ctrl2 = dir === "up"? `${draw.start.left},${draw.end.top}`:`${draw.end.left},${draw.start.top}`;
-    path.setAttribute('id','mp-'+this.uid);
+		let dirX = draw.start.left > draw.end.left?'left':'right';
+		path.setAttribute('id','mp-'+this.uid);
     path.setAttributeNS(null, "d", `M${draw.start.left},${draw.start.top} Q${ctrl2} ${draw.end.left},${draw.end.top}`);
 		const pathLen = (path as any).getTotalLength();
 		this.target.appendChild( path );
-		return pathLen;
+		return {
+			distance:pathLen,
+			directionY:dir,
+			directionX:dirX
+		};
 	}
 }
 
@@ -80,37 +129,13 @@ export class MovementService{
 	}
 	public bezier = b;
 	
-	//gives a Distance
-	public rateDistance(n):string{
-		let rating;
-		n = Math.round(n);
-		console.log('R',n, n < 100)
-
-		if(n > 0){
-			rating = 'v-short';
-		}
-		if(n > 200){
-			rating = 'short';
-		}
-		if(n > 300){
-			rating = 'medium';
-		}
-		if(n > 400){
-			rating = 'long';
-		}
-		if(n > 800){
-			rating = 'v-short';
-		}
-
-		return rating;
-	}
 
 	public rateSpeed(n){
 
 	}
 
-	public async fromTo(coordinateStart?:Coordinate, coordinateEnd?:Coordinate, speed:number = 3000){
-		this.bezier.draw({
+	public async fromTo(coordinateStart?:Coordinate, coordinateEnd?:Coordinate, speed?:number){
+		const pathInfo = this.bezier.draw({
 			start:coordinateStart,
 			end:coordinateEnd
 		})
@@ -121,16 +146,19 @@ export class MovementService{
 				translateX: path('x'),
 				translateY: path('y'),
 				easing: 'linear',
-				duration: speed,
+				duration: speed || rateDistance( pathInfo.distance ).use,
 				loop: false,
+				elasticity:100,
+				easeing:'easeOutElastic',
 				complete(){
+					console.log( 'speed of', rateDistance( pathInfo.distance ).use, rateDistance( pathInfo.distance ).name )
 					resolve();
 				}
 			});
 		});
 	}
 
-  public async to(coordinate?:Coordinate, speed:number = 3000){
+  public async to(coordinate?:Coordinate, speed?:number){
 
 		if(!coordinate){
 			coordinate = <Coordinate>{
@@ -140,15 +168,12 @@ export class MovementService{
 		}
 		let wrapperCoordianate = this.wrapper.getBoundingClientRect();
 		
-		let distance = this.bezier.draw({
+		let pathInfo = this.bezier.draw({
 			start:{
 				top:wrapperCoordianate.top||0,
 				left:wrapperCoordianate.left||0
 			},
-			end:{
-				top:randomIntClamp(0,innerHeight - wrapperCoordianate.height),
-				left:randomIntClamp(0,innerWidth  - wrapperCoordianate.height)
-			}
+			end:coordinate
 		})
 		
 		let path = anime.path('#generated path');
@@ -160,17 +185,19 @@ export class MovementService{
 				translateX: path('x'),
 				translateY: path('y'),
 				easing: 'linear',
-				duration: speed,
+				duration: speed || rateDistance(pathInfo.distance).use,
 				loop: false,
+				elasticity:100,
+				easeing:'easeOutElastic',
 				complete:()=>{
-					console.log( this.rateDistance(distance) )
+					
 					resolve();
 				}
 			});
 		});
 	}
 	
-	public async toElement(selector:string, alignTo:'top'|'left'|'right'|'bottom', speed:number = 3000){
+	public async toElement(selector:string, alignTo:'top'|'left'|'right'|'bottom', speed?:number){
 		
 		let wrapperCoordianate = this.wrapper.getBoundingClientRect();
 		let toTarget = <Element>document.querySelector(selector);
@@ -205,7 +232,7 @@ export class MovementService{
 			}
 		}
 
-		let distance = this.bezier.draw({
+		let pathInfo = this.bezier.draw({
 			start:{
 				top:wrapperCoordianate.top||0,
 				left:wrapperCoordianate.left||0
@@ -222,10 +249,12 @@ export class MovementService{
 				translateX: path('x'),
 				translateY: path('y'),
 				easing: 'linear',
-				duration: speed,
+				duration: speed || rateDistance(pathInfo.distance).use,
 				loop: false,
+				elasticity:100,
+				easeing:'easeOutElastic',
 				complete:()=>{
-					console.log( this.rateDistance(distance) )
+					console.log( 'speed of', rateDistance( pathInfo.distance ).use, rateDistance( pathInfo.distance ).name )
 					resolve();
 				}
 			});

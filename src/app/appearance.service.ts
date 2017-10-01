@@ -34,7 +34,7 @@ export class AppearanceService {
   }
 
   position = {
-    top: (innerHeight / 2) - (this.avatar.size / 2),
+    top: 0 - this.avatar.size,
     left: (innerWidth / 2) - (this.avatar.size / 2)
   }
 

@@ -3,6 +3,7 @@ import { AppearanceService } from "../appearance.service";
 import { EmotionService } from "../emotion.service";
 import { MovementService } from "../movement.service";
 import { LightingService } from "../lighting.service";
+import { StepsService } from "../steps.service";
 import { randomIntClamp } from "../random.utils";
 //sadly gsap is not very compatible with typescript
 import * as anime from "animejs";
@@ -21,7 +22,8 @@ interface Coordinate{
     AppearanceService,
     EmotionService,
     MovementService,
-    LightingService
+    LightingService,
+    StepsService
   ]
 })
 export class AvatarComponent implements OnInit {
@@ -30,11 +32,14 @@ export class AvatarComponent implements OnInit {
     private appearance:AppearanceService,
     private emotion:EmotionService,
     private moves:MovementService,
-    private lighting:LightingService
+    private lighting:LightingService,
+    private timeline:StepsService
   ) {}
   
   
   async ngOnInit() {
+
+
 
     //Sets the point lighting
     this.lighting.init()
@@ -46,22 +51,19 @@ export class AvatarComponent implements OnInit {
 
     //Required
     await this.moves.fromTo({
-      top:intialPosition.top,
+      top:-(innerWidth),
       left:intialPosition.left
     },{
-      top:intialPosition.top,
+      top:(document.querySelector('#speech-wrapper').getBoundingClientRect().top / 2) - 68,
       left:intialPosition.left
-    }, 0);
+    },600);
 
-    await this.moves.to({
-      left:400,
-      top:300
-    }, 3000);
 
-    await this.moves.toElement('#speech-wrapper p', 'top' ,4000);
-    await this.moves.toElement('#speech-wrapper p', 'left' ,4000);
-    await this.moves.toElement('#speech-wrapper p', 'bottom' ,4000);
-    await this.moves.toElement('#speech-wrapper p', 'right' ,4000);
+    await this.moves.toElement('#speech-wrapper', 'top');
+    await this.moves.toElement('#speech-wrapper', 'left');
+    await this.moves.toElement('#speech-wrapper', 'bottom');
+    await this.moves.toElement('#speech-wrapper', 'right');
+    
     
     await this.emotion.setEyeShape({
       eyeSelector:'left',

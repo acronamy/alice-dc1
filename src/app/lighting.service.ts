@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import {  AppearanceService } from './appearance.service';
 
 @Injectable()
 export class LightingService {
@@ -7,6 +8,10 @@ export class LightingService {
   height:number;
   
   angleFromPointLight(style:any = {left:0,top:0}){
+    
+    this.width = AppearanceService.publicAvatar.size;
+    this.height = AppearanceService.publicAvatar.size;
+
     let x = parseInt(style.left);
     let y = parseInt(style.top);
     const p1 = {

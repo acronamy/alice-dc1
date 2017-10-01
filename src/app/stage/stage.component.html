@@ -1,4 +1,40 @@
+<div (click)='startRecruitment()' class='step-activation'>
 
+    
 
+    <div class='container' id='speech-wrapper'>
+        <h2 [ngStyle]='captionStyle'>
+            {{timeline.text}}
+        </h2>
 
-<app-speech></app-speech>
+        <div id='user-speach-hints'>
+            <div class='mic-stat'>
+                <svg [ngStyle]='{opacity:timeline.isListening?1:0, height:timeline.isListening?"100px":0, position:timeline.isListening?"relative":"absolute", transform:timeline.isListening?"scale(1)":"scale(0)"}' id='speech-wave' width="200" height="100" viewBox="0 0 200 100">
+                    <defs>
+
+                        <path id="double-wave"
+                            d="M0 50
+                                C 40 10, 60 10, 100 50 C 140 90, 160 90, 200 50
+                                C 240 10, 260 10, 300 50 C 340 90, 360 90, 400 50
+                                L 400 100 L 0 100 Z" />
+                    </defs>
+                    
+                    <use xlink:href="#double-wave" x="0" y="1" transform='scale(1.2)'>
+                        <animate attributeName="x" from="0" to="-200" dur="3s"
+                                repeatCount="indefinite"/>
+                    </use>
+                </svg>
+            </div>
+        </div>
+        <div id='user-cta'>
+            <button>Yes</button>
+            <button>No</button>
+        </div>
+    </div>
+    
+</div>
+
+<div id='user-inputs' [ngStyle]='{height:timeline.isListening?"80px":"0"}'>
+    <input [attr.type]='inputType' [attr.value]='timeline.userSpeach' [attr.placeholder]="inputPlaceholder"/>
+</div>
+    

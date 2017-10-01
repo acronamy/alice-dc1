@@ -1,0 +1,96 @@
+.step-activation{
+    height:100vh;
+    position: fixed;
+    cursor: pointer;
+    z-index: 10;
+    left: 0;
+    right:0;
+}
+
+
+#speech-wrapper{
+    position: absolute;
+    bottom: 0;
+    left:0;
+    right:0;
+    top:0;
+    font-size:4em;
+    height: 4em;
+    margin:auto;
+    text-align: center;
+    padding:20px;
+    color:#000;
+    p{
+        padding: 0;
+        margin:0;
+        text-align: center;
+        font-size: inherit;
+        padding:.5em 1.2em;
+        border-radius: 5px;
+        font-weight: 100;
+        display: inline-block;
+        transition: width .3s;
+    }
+}
+
+#user-inputs{
+    overflow: hidden;
+    height: 0;
+    transition: height .5s ease-in-out;
+    z-index: 20;
+    background: #000;
+    box-sizing: border-box;
+    font-size:1.5em;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right:0;
+    bottom:0;
+    display: block;
+    white-space: nowrap;
+    border:1px solid #dedede;
+    display: flex;
+    align-items: center;
+    &:before{
+        padding: 1em;
+        padding-right: 0;
+        flex: 1;
+        font-size: 1em;
+        color:#dedede;
+        content:'>';
+        cursor: default;
+        touch-action: none;
+        pointer-events: none;
+    }
+    input{
+        margin: 0;
+        padding: 1em;
+        padding-left: 1em;
+        -webkit-appearance: none;
+        color:#dedede;
+        flex: 50;
+        left: 0;
+        top:0;
+        background-color: transparent;
+        font-size: 1em;
+        border:0;
+        outline: 0;
+    }
+}
+
+.mic-stat{
+    color:#A5AFB9;
+}
+
+#double-wave{
+    fill:transparent;
+    stroke:#000;
+    stroke-width: 2px;
+}
+
+#speech-wave{
+    transform: scale(0);
+    position: absolute;
+    opacity: 0;
+    transition:all .5s;
+}

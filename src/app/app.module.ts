@@ -5,14 +5,12 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { AvatarComponent } from './avatar/avatar.component';
-import { SpeechComponent } from './speech/speech.component';
 import { StageComponent } from './stage/stage.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AvatarComponent,
-    SpeechComponent,
     StageComponent
   ],
   imports: [
