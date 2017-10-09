@@ -4,6 +4,7 @@ import * as KUTE from 'kute.js';
 import 'kute.js/kute-svg';
 import 'kute.js/kute-css';
 import 'kute.js/kute-attr';
+import * as anime from "animejs";
 
 
 
@@ -30,6 +31,8 @@ interface EyeShapeOptions{
 export class EmotionService {
 
   constructor() { }
+
+  allowBlinks = true;
 
   private eyeShapes:EyeShapes = {
     default:'M95,25C95,14,86,5,75,5H25C14,5,5,14,5,25V75C5,86,14,95,25,95H75C86,95,95,86,95,75V25Z',
@@ -118,6 +121,32 @@ export class EmotionService {
       ).start()
       }
     });
+  }
+
+  async blink(selection:EyeSelection = 'both'){
+    await new Promise(resolve=>{
+      anime({
+        targets:this.getEyes(selection),
+        scaleY:.1,
+        duration:300,
+        easing:'easeOutElastic',
+        complete(){
+          resolve()
+        }
+      })
+    })
+    await new Promise(resolve=>{
+      anime({
+        targets:this.getEyes(selection),
+        scaleY:1,
+        duration:400,
+        easing:'easeOutElastic',
+        complete(){
+          resolve()
+        }
+      })
+    })
+    return;
   }
 
 

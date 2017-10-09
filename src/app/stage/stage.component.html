@@ -1,40 +1,237 @@
-<div (click)='startRecruitment()' class='step-activation'>
+<div class='step-activation'>
 
     
+    <div id="path-disk">
+        
+    </div>
 
     <div class='container' id='speech-wrapper'>
-        <h2 [ngStyle]='captionStyle'>
+
+        <img [hidden]='!timeline.logoIsShown' width="150px" [@fadeInOut] src='/assets/dyson-digital-it.png'>
+        <h2 [hidden]='!timeline.textIsShown' [@fadeInOut] [ngStyle]='captionStyle'>
             {{timeline.text}}
         </h2>
 
-        <div id='user-speach-hints'>
-            <div class='mic-stat'>
-                <svg [ngStyle]='{opacity:timeline.isListening?1:0, height:timeline.isListening?"100px":0, position:timeline.isListening?"relative":"absolute", transform:timeline.isListening?"scale(1)":"scale(0)"}' id='speech-wave' width="200" height="100" viewBox="0 0 200 100">
+        <div [hidden]='!timeline.isListening' id='user-speach-hints'>
+            
+                <svg id='speech-wave' width="204" height="100" viewBox="0 0 200 100">
                     <defs>
 
-                        <path id="double-wave"
-                            d="M0 50
-                                C 40 10, 60 10, 100 50 C 140 90, 160 90, 200 50
-                                C 240 10, 260 10, 300 50 C 340 90, 360 90, 400 50
-                                L 400 100 L 0 100 Z" />
+                        <path id="wave-initial"
+                            d="M-112,61.2c43,0,67,0,120,0c67.9,0,77,0,120,0c67.9,0,79.7,0,120,0c67.9,0,78.3,0,120,0v91.1h-480" />
+                        <path id="double-wave-closed"
+                            d="M-112,61.2c43,0,67,0,120,0c67.9,0,77,0,120,0c67.9,0,79.7,0,120,0c67.9,0,78.3,0,120,0v91.1h-480" />
                     </defs>
                     
-                    <use xlink:href="#double-wave" x="0" y="1" transform='scale(1.2)'>
+                    <use xlink:href="#double-wave-closed" x="-2" y="2">
                         <animate attributeName="x" from="0" to="-200" dur="3s"
                                 repeatCount="indefinite"/>
                     </use>
                 </svg>
+            
+        </div>
+
+        <div  id='questionOne' role='apealing pictures' [hidden]='!timeline.questionOneChoicesShown' [@fadeInOut]>
+
+        </div>
+
+        <div  id='questionTwo' role='apealing activities' [hidden]='!timeline.questionTwoChoicesShown' [@fadeInOut]>
+            <button data-value='tester,developer' id='choice-reading' class='choice green-bg'>Reading</button>
+            <button data-value='project-manager' id='choice-talking' class='choice teal-bg'>Talking</button>
+            <button data-value='developer' id='choice-writing' class='choice orange-bg'>Writing</button>
+            <button data-value='ux,creative' id='choice-drawing' class='choice red-bg'>Drawing</button>
+        </div>
+
+        <div  id='questionThree' role='Who do you associate with the most?' [hidden]='!timeline.questionThreeChoicesShown' [@fadeInOut]>
+            <div class="row">
+                <div class="three columns img-wrapper">
+                    <img id='choice-peter-pan' class='choice' data-value='project-manager' src='/assets/peter-pan.png'/>
+                    <small>A</small>
+                </div>
+                <div class="three columns img-wrapper">
+                    <img id='choice-pocahontas' class='choice' data-value='developer,ux,creative' src='/assets/moulon.png'/>
+                    <small>B</small>
+                </div>
+                <div class="three columns img-wrapper">
+                    <img id='choice-walle' class='choice' data-value='tester' src='/assets/wale.png'/>
+                    <small>C</small>
+                </div>
+                <div class="three columns img-wrapper">
+                    <img id='choice-lion-king' class='choice' data-value='ux,creative' src='assets/lion-king.png'/>
+                    <small>D</small>
+                </div>
             </div>
         </div>
-        <div id='user-cta'>
-            <button>Yes</button>
-            <button>No</button>
+
+        <div  id='questionFour' role='apealing pictures' [hidden]='!timeline.questionFourChoicesShown' [@fadeInOut]>
+            <div class="row">
+                <div class="three columns img-wrapper">
+                    <img id='choice-stone' class='choice' data-value='creative,ux' src='/assets/stone-fail.png'/>
+                    <small>A</small>
+                </div>
+                <div class="three columns img-wrapper">
+                    <img id='choice-dog-chase' class='choice' data-value='tester' src='/assets/dog-chase.png'/>
+                    <small>B</small>
+                </div>
+                <div class="three columns img-wrapper">
+                    <img id='choice-cat-apple' class='choice' data-value='project-manager' src='/assets/cat-apple.png'/>
+                    <small>C</small>
+                </div>
+                <div class="three columns img-wrapper">
+                    <img id='choice-css' class='choice' data-value='developer' src='assets/css-wins.png'/>
+                    <small>D</small>
+                </div>
+            </div>
         </div>
+
+        <div id='questionFiveAddon' >
+            <div [hidden]='!timeline.questionFiveAddonFunnyCake' [@fadeInOut]>
+                <img src="/assets/cake-fail.png"/>
+            </div>
+
+            <div [hidden]='!timeline.questionFiveAddonAnswerA'>
+                <div class='four columns img-wrapper'>
+                    <p class='label'>A</p>
+                    <img src='/assets/sprinkles.png'/>
+                </div>
+                <div class='eight columns'>
+                    <p class='small-text align-left'>
+                        Can it be salvaged? They’ve tried their best.
+                        <br>
+                        <br>
+                        Maybe a few sprinkles & new layer of icing...? 
+                    </p>
+                </div>
+            </div>
+
+            <div [hidden]='!timeline.questionFiveAddonAnswerB'>
+                <div class='four columns img-wrapper'>
+                    <p class='label'>B</p>
+                    <img src='/assets/start-again.png'/>
+                </div>
+                <div class='eight columns'>
+                    <p class='small-text align-left'>
+                        Start again. 
+                        <br>
+                        <br>
+                        It’s a mess. With two on the team you can make the best cake at the party. 
+                    </p>
+                </div>
+            </div>
+
+            <div [hidden]='!timeline.questionFiveAddonAnswerC'>
+                <div class='four columns img-wrapper'>
+                    <p class='label'>C</p>
+                    <img src='/assets/backtrack.png'/>
+                </div>
+                <div class='eight columns'>
+                    <p class='small-text align-left'>
+                        Let’s check the recipe to see where they have gone wrong. 
+                        <br>
+                        <br>
+                        We can work back to that point to see if the current cake can be saved.
+                    </p>
+                </div>
+            </div>
+
+            <div [hidden]='!timeline.questionFiveAddonAnswerD'>
+                <div class='four columns img-wrapper'>
+                    <p class='label'>D</p>
+                    <img src='assets/sausage-rolls.png'/>
+                </div>
+                <div class='eight columns'>
+                    <p class='small-text align-left'>
+                        Is a cake the best answer for a birthday?
+                        <br>
+                        <br>
+                        I heard sausage rolls were nice for a special occasion.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div  id='questionFive' role='cake' [hidden]='!timeline.questionFiveChoicesShown' [@fadeInOut]>
+                <div class="row">
+                    <div class="three columns img-wrapper">
+                        <img id='choice-sprinkles' class='choice' data-value='project-manager,tester' src='/assets/sprinkles.png'/>
+                        <small>A. sprinkles</small>
+                    </div>
+                    <div class="three columns img-wrapper">
+                        <img id='choice-start-again' class='choice' data-value='developer' src='/assets/start-again.png'/>
+                        <small>B. Start again</small>
+                    </div>
+                    <div class="three columns img-wrapper">
+                        <img id='choice-backtrack' class='choice' data-value='tester,creative' src='/assets/backtrack.png'/>
+                        <small>C. Backtrack</small>
+                    </div>
+                    <div class="three columns img-wrapper">
+                        <img id='choice-sausage-rolls' class='choice' data-value='ux,project-manager' src='assets/sausage-rolls.png'/>
+                        <small>D. Sausage rolls?</small>
+                    </div>
+                </div>
+        </div>
+
+        <div [hidden]='!timeline.jobsTableIsShown' id='jobs-table'>
+                
+            <h4>Best matches (mock data)</h4>
+            <table class="u-full-width">
+                <thead>
+                    <tr>
+                        <th>Job Name</th>
+                        <th>Persona</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a href='#'>Job one</a></td>
+                        <td>Project manager</td>
+                        <td><a href='#'>Email</a></td>
+                    </tr>
+                    <tr>
+                        <td><a href='#'>Job two</a></td>
+                        <td>Creative</td>
+                        <td><a href='#'>Email</a></td>
+                    </tr>
+                </tbody>
+            </table>
+    
+            <h4>Other roles (mock data)</h4>
+            <table class="u-full-width">
+                <thead>
+                    <tr>
+                        <th>Job Name</th>
+                        <th>Persona</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a href='#'>Job three</a></td>
+                        <td>developer</td>
+                        <td><a href='#'>Email</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div [hidden]='!timeline.confirmCTAIsShown' id='user-cta'>
+            <button id='select-yes' value="true" class='yes-no will-blink button'>Yes</button>
+            <button id='select-no' value="false" class='yes-no will-blink button'>No</button>
+        </div>
+
+        <div [hidden]='!timeline.startButtonIsShown' [@fadeInOut] id='start-button-wrapper'>
+            <button (click)='startRecruitment()'  class='button button-large'>Find Jobs</button>
+        </div>
+
     </div>
+
+   
     
 </div>
 
 <div id='user-inputs' [ngStyle]='{height:timeline.isListening?"80px":"0"}'>
-    <input [attr.type]='inputType' [attr.value]='timeline.userSpeach' [attr.placeholder]="inputPlaceholder"/>
+    <form id='userManualAnswer' action="/stub" type='post' >
+        <input [attr.name]='timeline.manualInputName' (click)="inputClear($event)" (focus)="inputClear($event)" [attr.type]='inputType' [attr.value]='timeline.userSpeach' [attr.placeholder]="timeline.manualInputPlaceholder" autocomplete="off"/>
+    </form>
 </div>
     

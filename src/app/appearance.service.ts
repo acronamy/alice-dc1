@@ -21,11 +21,11 @@ export class AppearanceService {
     eyeSize:20,
     outerDiskColor:"#A5AFB9",
     innerDiskColor:"rgba(24, 28, 33, .9)",
-    size:300,
+    size:225,
   }
 
   static publicAvatar = {
-    size:300
+    size:225
   }
 
   screen = {

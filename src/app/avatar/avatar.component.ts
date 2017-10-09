@@ -49,33 +49,88 @@ export class AvatarComponent implements OnInit {
     //Sets the initial emotion
     this.appearance.initialEmotion()
 
+    await this.emotion.setEyeShape({
+      eyeSelector:'both',
+      shape:'circle',
+      speed:300,
+      transforms:{
+        scale:.1,
+        morphPrecision: 4,
+        reverseFirstPath: true,
+        easing: 'easingCubicInOut'
+      }
+    });
+
     //Required
     await this.moves.fromTo({
       top:-(innerWidth),
       left:intialPosition.left
     },{
-      top:(document.querySelector('#speech-wrapper').getBoundingClientRect().top / 2) - 68,
+      top:(document.querySelector('#path-disk').getBoundingClientRect().top / 2) - 68,
       left:intialPosition.left
-    },600);
+    },400, async ()=>{
+      //after landing
+      await this.emotion.setEyeShape({
+        eyeSelector:'both',
+        shape:'circle',
+        speed:300,
+        transforms:{
+          scale:.1,
+          morphPrecision: 4,
+          reverseFirstPath: true,
+          easing: 'easingCubicInOut'
+        }
+      });
 
 
-    await this.moves.toElement('#speech-wrapper', 'top');
-    await this.moves.toElement('#speech-wrapper', 'left');
-    await this.moves.toElement('#speech-wrapper', 'bottom');
-    await this.moves.toElement('#speech-wrapper', 'right');
-    
-    
+    const blinkIntervals = [
+      2000,
+      5000,
+      10000,
+      15000,
+      20000
+    ];
+    (function loop() {
+      if(this.emotion.allowBlinks){
+        let rand = blinkIntervals[randomIntClamp(0, blinkIntervals.length - 1)];
+        setTimeout(()=> {
+          this.emotion.blink()
+          loop.bind(this)();  
+        }, rand);
+      }
+    }).bind(this)();
+
+    });
+
     await this.emotion.setEyeShape({
-      eyeSelector:'left',
+      eyeSelector:'both',
       shape:'circle',
       speed:300,
       transforms:{
-        scaleY:.3,
+        delay:3000,
+        scale:1,
+        morphPrecision: 4,
+        reverseFirstPath: true,
+        easing: 'easingCubicInOut'
+      }
+    });
+
+
+    await this.moves.toElement('#path-disk', 'top');
+    await this.moves.toElement('#path-disk', 'left');
+    
+    
+    
+    await this.emotion.setEyeShape({
+      eyeSelector:'both',
+      shape:'circle',
+      speed:300,
+      transforms:{
+        scale:1,
         morphPrecision: 4,
         reverseFirstPath: true,
       }
     });
-    
 
     // await this.emotion.setEyeShape({
     //   eyeSelector:'random',

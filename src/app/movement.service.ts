@@ -124,7 +124,7 @@ interface Coordinate{
 @Injectable()
 export class MovementService{
   
-  get wrapper(){
+  	get wrapper(){
 		return document.querySelector('#avatar-size') as Element;
 	}
 	public bezier = b;
@@ -134,7 +134,7 @@ export class MovementService{
 
 	}
 
-	public async fromTo(coordinateStart?:Coordinate, coordinateEnd?:Coordinate, speed?:number){
+	public async fromTo(coordinateStart?:Coordinate, coordinateEnd?:Coordinate, speed?:number, callback?:Function){
 		const pathInfo = this.bezier.draw({
 			start:coordinateStart,
 			end:coordinateEnd
@@ -145,13 +145,14 @@ export class MovementService{
 				targets: '#move-wrapper',
 				translateX: path('x'),
 				translateY: path('y'),
-				easing: 'linear',
 				duration: speed || rateDistance( pathInfo.distance ).use,
 				loop: false,
-				elasticity:100,
-				easeing:'easeOutElastic',
+				elasticity: 300,
+				easing: "easeOutElastic",
 				complete(){
-					console.log( 'speed of', rateDistance( pathInfo.distance ).use, rateDistance( pathInfo.distance ).name )
+					if(callback){
+						callback();
+					}
 					resolve();
 				}
 			});
@@ -184,11 +185,11 @@ export class MovementService{
 				targets: '#move-wrapper',
 				translateX: path('x'),
 				translateY: path('y'),
-				easing: 'linear',
+				angle:path('angle'),
 				duration: speed || rateDistance(pathInfo.distance).use,
 				loop: false,
-				elasticity:100,
-				easeing:'easeOutElastic',
+				elasticity:300,
+				easing:'easeOutElastic',
 				complete:()=>{
 					
 					resolve();
@@ -197,6 +198,29 @@ export class MovementService{
 		});
 	}
 	
+	public async rotate(angle,speed){
+		let wrapperCoordianate = this.wrapper.getBoundingClientRect();
+		
+		let pathInfo = {
+			top:wrapperCoordianate.top||0,
+			left:wrapperCoordianate.left||0
+		}
+		return await new Promise(resolve =>{
+			anime({
+				translateY:pathInfo.top,
+				translateX:pathInfo.left,
+				targets: '#eyes',
+				loop: false,
+				elasticity:300,
+				easing:'easeOutElastic',
+				rotate:angle,
+				complete:()=>{
+					resolve();
+				}
+			});
+		});
+	}
+
 	public async toElement(selector:string, alignTo:'top'|'left'|'right'|'bottom', speed?:number){
 		
 		let wrapperCoordianate = this.wrapper.getBoundingClientRect();
